@@ -1,0 +1,242 @@
+<div class="skeleton-container">
+  <div class="skeleton-overlay" *ngIf="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+  <form class="skeleton-content" [formGroup]="userForm" (ngSubmit)="save()">
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [formControl]="name" required />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="name.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="name.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="name.hasError('minlength') && !name.hasError('required')"
+      >
+        Name must be at least 2 characters long
+      </mat-error>
+      <mat-error
+        *ngIf="name.hasError('maxlength') && !name.hasError('required')"
+      >
+        Name can be max 30 characters long
+      </mat-error>
+      <mat-error *ngIf="name.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>First Surname</mat-label>
+      <input matInput type="text" [formControl]="surname_1" required />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="surname_1.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="name.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="
+          surname_1.hasError('minlength') && !surname_1.hasError('required')
+        "
+      >
+        First Surname must be at least 2 characters long
+      </mat-error>
+      <mat-error
+        *ngIf="
+          surname_1.hasError('maxlength') && !surname_1.hasError('required')
+        "
+      >
+        First Surname can be max 30 characters long
+      </mat-error>
+      <mat-error *ngIf="surname_1.hasError('required')">
+        First Surname is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Second Surname</mat-label>
+      <input matInput type="text" [formControl]="surname_2" />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="surname_2.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="name.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="surname_2.hasError('minlength')">
+        Second Surname must be at least 2 characters long
+      </mat-error>
+      <mat-error *ngIf="surname_2.hasError('maxlength')">
+        Second Surname can be max 30 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Birth date</mat-label>
+      <input matInput [formControl]="birth_date" [matDatepicker]="picker" />
+      <mat-error *ngIf="birth_date.hasError('required')">
+        Birth date is <strong>required</strong>
+      </mat-error>
+      <mat-datepicker-toggle
+        tabindex="-1"
+        matSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!--
+      <div>
+        <label for="birthDate">Birth date: </label>
+        <input type="date" [formControl]="birth_date" />
+        <div
+          *ngIf="birth_date.errors && isValidForm != null && !isValidForm"
+          [ngClass]="'error'"
+        >
+          <div *ngIf="birth_date.errors.required">Birth date is required</div>
+        </div>
+      </div>
+      -->
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        [formControl]="email"
+        required
+        placeholder="email@example.com"
+      />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="email.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="email.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="
+          (email.hasError('email') || email.hasError('pattern')) &&
+          !email.hasError('required')
+        "
+      >
+        Please enter a valid email address
+      </mat-error>
+      <mat-error
+        *ngIf="email.hasError('uniqueEmail') && !email.hasError('required')"
+      >
+        Email already used
+      </mat-error>
+      <mat-error *ngIf="email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>{{ editMode ? 'Confirm password' : 'Password' }}</mat-label>
+      <input matInput type="password" [formControl]="password" required />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="password.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="password.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="password.hasError('minlength') && !password.hasError('required')"
+      >
+        Password must have at least 8 characters
+      </mat-error>
+      <mat-error
+        *ngIf="password.hasError('maxlength') && !password.hasError('required')"
+      >
+        Password can't have more than 64 characters
+      </mat-error>
+      <mat-error
+        *ngIf="password.hasError('pattern') && !password.hasError('required')"
+      >
+        Password must contain, at least, one uppercase letter (A-Z), one
+        lowercase letter (a-z), one number (0-9) and one special character
+      </mat-error>
+      <mat-error *ngIf="password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!editMode" color="accent" appearance="fill">
+      <mat-label>Password confirmation</mat-label>
+      <input
+        matInput
+        type="password"
+        [formControl]="password_confirmation"
+        required
+      />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="password_confirmation.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="password_confirmation.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="
+          password_confirmation.hasError('matching') &&
+          !password_confirmation.hasError('required')
+        "
+      >
+        Passwords don't match
+      </mat-error>
+      <mat-error *ngIf="password_confirmation.hasError('required')">
+        Confirm your new password
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button-row">
+      <button
+        *ngIf="editMode"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="userForm.invalid"
+      >
+        {{ editMode ? 'Save' : 'Register' }}
+      </button>
+    </div>
+  </form>
+</div>

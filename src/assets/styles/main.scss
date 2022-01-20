@@ -1,0 +1,22 @@
+/******************************/
+/***** EXTERNAL LIBRARIES *****/
+/******************************/
+
+/* Angular Material */
+//INFO: Imported in itcss/1-settins to use Angular Material theme variables without mixins
+@import "angular-material/angular-material";
+
+/* Bootstrap */
+//@import "bootstrap/bootstrap";
+/* NgBootstrap */
+//@import "~bootstrap/scss/bootstrap";
+
+/* Font Awesome */
+@import "fontawesome/fontawesome";
+
+/******************************/
+/*********** ITCSS ************/
+/******************************/
+
+// We load it after the external dependencies in order to override anything we want about them!
+@import "itcss/itcss";

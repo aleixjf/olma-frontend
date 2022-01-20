@@ -1,0 +1,71 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-around;
+
+  @media screen and (min-width: $phoneWidth) {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+.error-container {
+  margin-top: 10vh;
+
+  .error-number {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    font-size: 7rem;
+
+    @media screen and (min-width: $phoneWidth) {
+      font-size: 10rem;
+    }
+
+    span {
+      margin: 0 1rem;
+      height: 100%;
+      font-size: 8rem;
+
+      @media screen and (min-width: $phoneWidth) {
+        font-size: 12rem;
+      }
+    }
+  }
+
+  .error-description {
+    margin-top: 2rem;
+
+    p {
+      font-size: larger;
+      text-align: center;
+
+      a {
+        color: $accent;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+
+    .home-button {
+      text-align: center;
+    }
+  }
+}

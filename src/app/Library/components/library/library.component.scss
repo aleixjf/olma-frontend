@@ -1,0 +1,104 @@
+:host {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 75vh;
+}
+
+mat-sidenav-container {
+  flex: auto;
+  overflow: hidden;
+
+  * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  mat-sidenav-content {
+    //INFO: This + css in playlist component is what allows us to have a table which uses 100% of available space
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+  }
+
+  mat-sidenav.mobile-drawer {
+    width: 80%;
+  }
+}
+
+/* Playlist header (Title + buttons) */
+.library-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 8px; //INFO: Like the mat-toolbar (8px + 8px of the icon = 16px)
+  padding-right: 16px; //INFO: Like the mat-toolbar
+
+  .node-settings {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .node-name {
+    margin: 8px 8px;
+  }
+}
+
+/* Buttons */
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  flex-wrap: wrap;
+
+  .button-description {
+    display: none;
+    /*
+    @media (min-width: 1200px) {
+      margin-left: 5px;
+      display: block;
+    }
+    */
+  }
+
+  .mat-button-base {
+    margin: 8px 8px;
+  }
+}
+
+/* Drawer Resizing */
+mwlResizable {
+  box-sizing: border-box; // required for the enableGhostResize option to work
+}
+
+.resize-handle-top,
+.resize-handle-bottom {
+  position: absolute;
+  height: 10px;
+  cursor: row-resize;
+  width: 100%;
+}
+.resize-handle-left,
+.resize-handle-right {
+  position: absolute;
+  height: 100%;
+  cursor: col-resize;
+  width: 10px;
+}
+
+.resize-handle-top {
+  top: 0;
+}
+.resize-handle-bottom {
+  bottom: 0;
+}
+.resize-handle-left {
+  left: 0;
+}
+.resize-handle-right {
+  right: 0;
+}

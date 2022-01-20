@@ -1,0 +1,161 @@
+<div class="menu-drawer" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a class="logo-container" routerLink="/">
+        <img
+          src="./assets/images/logo.svg"
+          class="brand-logo"
+          alt="OLMA Logo"
+        />
+        <span class="brand-name">OLMA</span>
+      </a>
+      <span class="header-spacer"></span>
+      <div class="site-menu desktop-only">
+        <a routerLink="/library" mat-button routerLinkActive="active"
+          >Library</a
+        >
+        <a routerLink="/about" mat-button routerLinkActive="active">About</a>
+        <a
+          routerLink="/admin"
+          mat-button
+          routerLinkActive="active"
+          *ngIf="admin"
+          >Admin panel</a
+        >
+      </div>
+
+      <div class="user-menu desktop-only">
+        <a
+          routerLink="/login"
+          mat-button
+          routerLinkActive="active"
+          *ngIf="!authenticated"
+          >Login</a
+        >
+        <a
+          routerLink="/register"
+          mat-button
+          routerLinkActive="active"
+          *ngIf="!authenticated"
+          >Register</a
+        >
+        <a
+          routerLink="/profile"
+          mat-button
+          routerLinkActive="active"
+          *ngIf="authenticated"
+          >Profile</a
+        >
+        <button mat-button (click)="logout()" *ngIf="authenticated">
+          Logout
+        </button>
+      </div>
+
+      <div class="mobile-only">
+        <!-- User Menu -->
+        <button
+          mat-icon-button
+          class="menu-icon"
+          [matMenuTriggerFor]="authMenu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon *ngIf="!authenticated">person_outline</mat-icon>
+          <mat-icon *ngIf="authenticated">person</mat-icon>
+        </button>
+        <mat-menu #authMenu="matMenu">
+          <div *ngIf="!authenticated">
+            <a routerLink="/login" mat-menu-item>
+              <!-- <mat-icon>login</mat-icon> -->
+              <mat-icon>person</mat-icon>
+              <span>Login</span>
+            </a>
+            <a routerLink="/register" mat-menu-item>
+              <!-- <mat-icon>login</mat-icon> -->
+              <mat-icon>person_add</mat-icon>
+              <span>Register</span>
+            </a>
+          </div>
+          <div *ngIf="authenticated">
+            <a routerLink="/profile" mat-menu-item>
+              <!-- <mat-icon>login</mat-icon> -->
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </a>
+            <button mat-menu-item (click)="logout()">
+              <!-- <mat-icon>logout</mat-icon> -->
+              <!-- <mat-icon>close</mat-icon> -->
+              <mat-icon>person_off</mat-icon>
+              <span>Logout</span>
+            </button>
+          </div>
+        </mat-menu>
+
+        <!-- Navigation Menu -->
+        <button
+          mat-icon-button
+          class="menu-icon"
+          (click)="mobileNav.toggle()"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #mobileNav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      position="end"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <a routerLink="/" mat-menu-item (click)="mobileNav.close()">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </a>
+        <a routerLink="/library" mat-menu-item (click)="mobileNav.close()">
+          <mat-icon>library_music</mat-icon>
+          <span>Library</span>
+        </a>
+        <a routerLink="/about" mat-menu-item (click)="mobileNav.close()">
+          <mat-icon>info</mat-icon>
+          <span>About</span>
+        </a>
+        <div *ngIf="!authenticated">
+          <a routerLink="/login" mat-menu-item (click)="mobileNav.close()">
+            <!-- <mat-icon>login</mat-icon> -->
+            <mat-icon>person</mat-icon>
+            <span>Login</span>
+          </a>
+          <a routerLink="/register" mat-menu-item (click)="mobileNav.close()">
+            <!-- <mat-icon>login</mat-icon> -->
+            <mat-icon>person_add</mat-icon>
+            <span>Register</span>
+          </a>
+        </div>
+        <div *ngIf="authenticated">
+          <a routerLink="/profile" mat-menu-item (click)="mobileNav.close()">
+            <!-- <mat-icon>login</mat-icon> -->
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </a>
+          <button mat-menu-item (click)="logout()" (click)="mobileNav.close()">
+            <!-- <mat-icon>logout</mat-icon> -->
+            <!-- <mat-icon>close</mat-icon> -->
+            <mat-icon>person_off</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <!-- <app-snackbar></app-snackbar> -->
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,15 @@
+.back-button {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+
+  .mat-button-base {
+    margin-top: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}

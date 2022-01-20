@@ -1,0 +1,45 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  padding: 16px;
+
+  @media screen and (min-width: $phoneWidth) {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+.two-columns:not(:last-child) {
+  margin-bottom: 16px;
+  @media screen and (min-width: $phoneWidth) {
+    margin-bottom: auto;
+  }
+}
+
+.example-card {
+  max-width: 400px;
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  .mat-card-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.mat-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-service:not(.api-connected) {
+  opacity: 30%;
+}

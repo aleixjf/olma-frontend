@@ -1,0 +1,15 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  padding: 16px;
+
+  @media screen and (min-width: $phoneWidth) {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+p,
+li {
+  opacity: 75%;
+}

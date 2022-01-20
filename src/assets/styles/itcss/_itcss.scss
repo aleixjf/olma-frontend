@@ -1,0 +1,35 @@
+/*
+ITCSS:
+
+1. SETTINGS: (Only used with CSS preprocessors)
+Global and brand variables --> Font, colors, definitions, etc. No CSS output.
+
+2. TOOLS:
+Mixins and global functions --> No CSS output.
+
+3. GENERIC:
+Ground Zero styles --> CSS Resets, normalizations, global box-sizing rules, etc.
+
+4. ELEMENTS:
+Customize and redefine the base HTML elements properties --> H1–H6 styles, ul (with no dots)
+
+5. OBJECTS:
+Cosmetic-free design patterns class selectors which define undecorated design patterns, like the media object from OOCSS.
+
+6. COMPONENTS:
+Designed components, chunks of UI
+For example: specific UI components.
+Most of the code goes here. Wrapping and constraining elements.
+
+7. UTILITIES:
+The only place where !important declarations will be accepted.The most explicit types of rules.
+This utilities/auxiliary classes have the capacity to override anything previously set on the triangle (on the points above here).
+*/
+
+@import "1-settings";
+@import "2-tools";
+@import "3-generic";
+@import "4-elements";
+@import "5-objects";
+@import "6-components";
+@import "7-utilities";

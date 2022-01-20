@@ -1,0 +1,17 @@
+<div class="legal">
+  <div class="legal-links">
+    <a routerLink="terms">Terms & Conditions</a>
+    <div class="link-separator"></div>
+    <a routerLink="privacy">Privacy Policy</a>
+  </div>
+  <div class="copyright">
+    <p>
+      <span *ngIf="year > established"
+        ><time date="">{{ established }}</time> - </span
+      ><time date="">{{ year }}</time> ©
+      <a href="https://es.linkedin.com/in/aleixjimenez">Aleix Jiménez</a>
+    </p>
+    <p>All rights reserved.</p>
+    <app-footer-icons></app-footer-icons>
+  </div>
+</div>

@@ -1,0 +1,240 @@
+<div>
+  <div class="skeleton-container">
+    <div class="skeleton-overlay" *ngIf="spinner">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <form
+      class="skeleton-content"
+      [formGroup]="smartlistEditor"
+      (ngSubmit)="editMode ? save() : addSmartlist()"
+    >
+      <div class="form-header">
+        <button
+          type="button"
+          class="back-button"
+          mat-raised-button
+          color="primary"
+          (click)="cancel()"
+        >
+          <mat-icon>arrow_back</mat-icon>
+          <span class="button-description">Back</span>
+        </button>
+        <mat-form-field color="accent" appearance="fill">
+          <mat-label>Smartlist Name</mat-label>
+          <input matInput type="text" [formControl]="name" required />
+          <button
+            type="button"
+            tabindex="-1"
+            *ngIf="name.value"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="name.reset()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="name.hasError('required')">
+            Smartlist name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid" formArrayName="rules">
+        <div class="grid-header">
+          <mat-slide-toggle [formControl]="type"
+            >Match all conditions</mat-slide-toggle
+          >
+          <div>
+            <button
+              type="button"
+              tabindex="-1"
+              matSuffix
+              mat-mini-fab
+              aria-label="Add new rule"
+              (click)="addRule()"
+            >
+              <!-- We can also add the following to limit the rules to 8 (as Traktor does).
+              However, I've chosen no limit so that everyone can set as many rules as they want.
+              If Traktor limit is exceeded, it will be exported as a regular playlist instead.
+              *ngIf="rules().length < 8" -->
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="grid-row"
+          *ngFor="let rule of rules().controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="tablet-friendly rule-header">
+            <div>Rule #{{ i + 1 }}</div>
+            <button
+              type="button"
+              tabindex="-1"
+              matSuffix
+              mat-icon-button
+              color="warn"
+              aria-label="Add new rule"
+              (click)="removeRule(i)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div>
+            <mat-form-field color="accent" appearance="fill">
+              <mat-label>Field</mat-label>
+              <mat-select required formControlName="field" id="field">
+                <mat-option *ngFor="let field of fields" [value]="field.value">
+                  {{ field.description }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field color="accent" appearance="fill">
+              <mat-label>Comparator</mat-label>
+              <mat-select formControlName="comparator" id="comparator" required>
+                <mat-option
+                  *ngFor="let comparator of comparators[i]"
+                  #comparator
+                  [value]="comparator.value"
+                >
+                  {{ comparator.description }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field
+              *ngIf="targets[i] && targets[i].length != 0"
+              color="accent"
+              appearance="fill"
+            >
+              <mat-label>Target</mat-label>
+              <mat-select formControlName="target" id="target" required>
+                <mat-option
+                  *ngFor="let target of targets[i]"
+                  #comparator
+                  [value]="target.value"
+                >
+                  {{ target.description }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              *ngIf="!targets[i] || targets[i].length == 0"
+              color="accent"
+              appearance="fill"
+            >
+              <mat-label>Target</mat-label>
+              <input
+                matInput
+                formControlName="target"
+                [type]="types[i]"
+                required
+              />
+              <!--
+              <button
+                type="button"
+                tabindex="-1"
+                *ngIf="target.value"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="target.reset()"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            -->
+            </mat-form-field>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              type="button"
+              tabindex="-1"
+              matSuffix
+              mat-icon-button
+              color="warn"
+              aria-label="Add new rule"
+              (click)="removeRule(i)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--
+        <mat-form-field color="accent" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [formControl]="title" required />
+        <button
+          type="button"
+          tabindex="-1"
+          *ngIf="title.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="title.reset()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="title.hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Release date</mat-label>
+        <input matInput [formControl]="release_date" [matDatepicker]="picker" />
+        <mat-datepicker-toggle
+          tabindex="-1"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    -->
+
+      <div class="form-errors" *ngIf="!validForm && error">
+        <p>{{ error }}</p>
+      </div>
+      <div class="button-row">
+        <button
+          type="button"
+          tabindex="-1"
+          mat-raised-button
+          color="primary"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          mat-raised-button
+          *ngIf="editMode"
+          color="primary"
+          type="submit"
+          [disabled]="smartlistEditor.invalid || !validForm"
+        >
+          Save Changes
+        </button>
+
+        <button
+          mat-raised-button
+          *ngIf="!editMode"
+          color="primary"
+          type="submit"
+          [disabled]="smartlistEditor.invalid || !validForm"
+        >
+          Create Smartlist
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

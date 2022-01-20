@@ -1,0 +1,57 @@
+<mat-tree
+  [dataSource]="dataSource"
+  [treeControl]="treeControl"
+  class="playlists-tree"
+>
+  <!-- Playlists (not expandable items) -->
+  <mat-tree-node
+    class="mat-tree-node"
+    *matTreeNodeDef="let node"
+    matTreeNodeToggle
+  >
+    <!-- There is inline padding applied to this node using styles. This padding value depends on the mat-icon-button width. -->
+    <a
+      class="node-entry node-link"
+      routerLink="{{
+        node.ids?.traktor
+          ? '/library/playlists/' + node.ids.traktor
+          : '/library/playlists/error'
+      }}"
+    >
+      <mat-icon class="node-icon">
+        {{ getPlaylistIcon(node) }}
+      </mat-icon>
+      <span class="button-description">{{ node.name }}</span>
+    </a>
+  </mat-tree-node>
+
+  <!-- Folders (expandable items) -->
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+    <div class="mat-tree-node">
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [attr.aria-label]="'Toggle ' + node.name"
+      >
+        <mat-icon class="mat-icon-rtl-mirror">
+          <!-- {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }} -->
+          {{ treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+        </mat-icon>
+      </button>
+      <div class="node-entry" matTreeNodeToggle>
+        <mat-icon class="node-icon">
+          {{ treeControl.isExpanded(node) ? 'folder_open' : 'folder' }}
+        </mat-icon>
+        <span class="button-description">{{ node.name }}</span>
+      </div>
+    </div>
+    <!-- There is inline padding applied to this div using styles.
+          This padding value depends on the mat-icon-button width.  -->
+    <div
+      [class.playlists-tree-collapsed]="!treeControl.isExpanded(node)"
+      role="group"
+    >
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+</mat-tree>

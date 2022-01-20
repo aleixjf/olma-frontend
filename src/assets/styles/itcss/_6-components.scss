@@ -1,0 +1,66 @@
+/*
+6. COMPONENTS:
+
+Designed components, chunks of UI.
+For example: specific UI components.
+Most of the code. Wrapping and constraining elements.
+*/
+
+// NOTE: In Angular, we do this on each component specifically
+// To use the variables, though, we can't use $variableName,
+// we have to use var--(variableName), and declare them inside a :host selector in _settings.scss
+
+/*
+The Components layer is where we begin to style
+recognisable pieces of UI. We're still binding
+onto classes here, so our specificity hasn't yet
+increased. However, this layer is more explicit
+than the last one in that we are now styling explicit,
+designed pieces of the DOM.
+
+We shouldn't find any selectors with a
+lower specificity than one class in this layer.
+This is where the majority of your work will happen
+after initial project set-up. Adding new components and
+features usually makes up the vast majority of development.
+*/
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+
+  mat-form-field {
+    margin-top: 15px;
+    width: 50%;
+
+    @media screen and (max-width: $phoneWidth) {
+      width: 100%;
+    }
+  }
+}
+
+//snackbar customizations
+//INFO: We can add specific classes to Snackbars via its config, adding pnaelClass: ['classes']
+//.snackbar-notification {
+.snackbar-notification {
+  color: $primary-light;
+  background-color: $primary-dark;
+
+  button {
+    color: $dark-text;
+    background-color: $accent;
+  }
+}
+
+.snackbar-error {
+  color: $warning;
+  background-color: $primary-dark;
+
+  button {
+    color: $dark-text;
+    background-color: $warning;
+  }
+}

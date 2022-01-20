@@ -1,0 +1,100 @@
+<div class="skeleton-container">
+  <div class="skeleton-overlay" *ngIf="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <!-- <circular-picture> -->
+  <div *ngIf="user" class="flex-container multi-columns">
+    <div class="two-columns">
+      <mat-card class="example-card">
+        <!-- <div mat-card-avatar class="profile-picture"></div> -->
+        <mat-card-title>{{ full_name }}</mat-card-title>
+        <!-- <mat-card-subtitle>{{ user.email }}</mat-card-subtitle> -->
+        <mat-card-content>
+          <p><span class="bold">Email:</span> {{ user.email }}</p>
+          <p>
+            <span class="bold">Birthday:</span>
+            {{ formatted_date }}
+          </p>
+          <!-- <p>This will be the about section for the user.</p> -->
+        </mat-card-content>
+        <mat-card-actions>
+          <a routerLink="/profile/edit" mat-raised-button color="accent"
+            >Edit Profile</a
+          >
+          <a routerLink="/profile/password" mat-raised-button color="accent"
+            >Change Password</a
+          >
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="two-columns">
+      <mat-card class="example-card">
+        <mat-card-title>Streaming services</mat-card-title>
+        <mat-card-content>
+          <p>
+            Connecting to a music streaming service will allow the app to
+            retrieve metadata for the tracks of your collection.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-button
+            (click)="oauthFlow('spotify')"
+            class="api-service"
+            [ngClass]="{ 'api-connected': platforms.spotify }"
+          >
+            <i class="fab fa-spotify fa-lg"></i
+            ><span class="button-description">Spotify</span>
+          </button>
+          <!--
+            <button
+              mat-button
+              (click)="oauthFlow('tidal')"
+              class="api-service"
+              [ngClass]="{ 'api-connected': platforms.tidal }"
+            >
+              <i class="fab fa-tidal fa-lg"></i> Tidal
+            </button>
+            -->
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="example-card">
+        <mat-card-title>Cloud services</mat-card-title>
+        <mat-card-content>
+          <p>
+            Connecting to a storage service will allow you to load and/or save
+            your collection directly to the cloud.
+          </p>
+          <p>
+            This is highly recommended because it will allow you to have the
+            updated library when you start your computer (after it syncs to the
+            cloud service, obviously).
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-button
+            (click)="oauthFlow('dropbox')"
+            class="api-service"
+            [ngClass]="{ 'api-connected': platforms.dropbox }"
+          >
+            <i class="fab fa-dropbox fa-lg"></i
+            ><span class="button-description">Dropbox</span>
+          </button>
+          <button
+            mat-button
+            (click)="oauthFlow('onedrive')"
+            class="api-service"
+            [ngClass]="{ 'api-connected': platforms.onedrive }"
+          >
+            <i class="fab fa-microsoft fa-lg"></i
+            ><span class="button-description">OneDrive</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

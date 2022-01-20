@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+mat-form-field {
+  width: 100%; //INFO: This is until we can solve sticky working correctly, so that when X-Overflow, the form is shown more or less correct
+}

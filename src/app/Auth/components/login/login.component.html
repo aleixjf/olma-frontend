@@ -1,0 +1,78 @@
+<div class="skeleton-container">
+  <div class="skeleton-overlay" *ngIf="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+  <form class="skeleton-content" [formGroup]="loginForm" (ngSubmit)="login()">
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        [formControl]="email"
+        required
+        placeholder="email@example.com"
+      />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="email.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="email.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="
+          (email.hasError('email') || email.hasError('pattern')) &&
+          !email.hasError('required')
+        "
+      >
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControl]="password" required />
+      <button
+        type="button"
+        tabindex="-1"
+        *ngIf="password.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="password.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="password.hasError('minlength') && !password.hasError('required')"
+      >
+        Password must have at least 8 characters
+      </mat-error>
+      <mat-error
+        *ngIf="password.hasError('maxlength') && !password.hasError('required')"
+      >
+        Password can't have more than 64 characters
+      </mat-error>
+      <mat-error *ngIf="password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      class="form-button"
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Login
+    </button>
+  </form>
+</div>

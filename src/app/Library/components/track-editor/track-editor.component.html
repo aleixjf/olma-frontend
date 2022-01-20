@@ -1,0 +1,121 @@
+<div>
+  <button
+    class="back-button"
+    mat-raised-button
+    color="primary"
+    (click)="cancel()"
+  >
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
+  <div class="skeleton-container">
+    <div class="skeleton-overlay" *ngIf="spinner">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <form
+      class="skeleton-content"
+      [formGroup]="trackEditor"
+      (ngSubmit)="saveChanges()"
+    >
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [formControl]="title" required />
+        <button
+          type="button"
+          tabindex="-1"
+          *ngIf="title.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="title.reset()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="title.hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Name (Title without extra information)</mat-label>
+        <input matInput type="text" [formControl]="name" />
+        <button
+          type="button"
+          tabindex="-1"
+          *ngIf="name.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="title.reset()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Mix</mat-label>
+        <input matInput type="text" [formControl]="mix" />
+        <button
+          type="button"
+          tabindex="-1"
+          *ngIf="mix.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="title.reset()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Release date</mat-label>
+        <input matInput [formControl]="release_date" [matDatepicker]="picker" />
+        <mat-datepicker-toggle
+          tabindex="-1"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Album</mat-label>
+        <input matInput type="text" [formControl]="album" />
+        <button
+          type="button"
+          tabindex="-1"
+          *ngIf="album.value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="album.reset()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="button-row">
+        <button
+          type="button"
+          tabindex="-1"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="trackEditor.invalid"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

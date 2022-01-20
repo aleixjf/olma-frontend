@@ -1,0 +1,107 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  margin-top: auto; // if the container is a flex element (column), it will automatically move to the bottom of the page
+  padding-bottom: 15px;
+  background: $footer-background;
+
+  * {
+    color: $text-color;
+  }
+}
+
+.legal {
+  padding: 0.9375rem 1.875rem;
+
+  .legal-links {
+    /*
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+
+    @media screen and (min-width: $phoneWidth) {
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+
+      & :first-child() {
+        text-align: right;
+      }
+      & :last-child() {
+        text-align: left;
+      }
+    }
+    */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    a {
+      padding-left: 15px;
+      padding-right: 15px;
+
+      //&:not(:last-child()) {
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .link-separator::before {
+      color: darken($light-text, 75%);
+      content: '•';
+    }
+    @media screen and (max-width: $phoneWidth) {
+      .link-separator {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: $phoneWidth) {
+      width: 50%;
+      display: grid;
+      //grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 50px 1fr;
+      justify-items: center;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1rem;
+
+      /*
+      & > :nth-child(2n + 1) {
+        justify-self: right;
+      }
+      & > :nth-child(2n) {
+        justify-self: left;
+      }
+      */
+
+      & > :nth-child(2n + 1) {
+        justify-self: right;
+      }
+      & > :nth-child(2n) {
+        justify-self: center;
+      }
+      & > :nth-child(3n) {
+        justify-self: left;
+      }
+
+      a {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+
+  .copyright {
+    width: 100%;
+
+    * {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+  }
+}

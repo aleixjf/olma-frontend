@@ -1,0 +1,132 @@
+// Foreground Element
+$dark-text: #000000;
+$light-text: #ffffff;
+$light-primary-text: $light-text;
+$light-accent-text: rgba($light-primary-text, 0.7);
+$light-disabled-text: rgba($light-primary-text, 0.5);
+$light-dividers: rgba($light-primary-text, 0.12);
+$light-focused: rgba($light-primary-text, 0.12);
+$dark-primary-text: rgba($dark-text, 0.87);
+
+$mat-dark-theme-foreground: (
+  base: $light-text,
+  divider: $light-dividers,
+  dividers: $light-dividers,
+  disabled: $light-disabled-text,
+  disabled-button: rgba($light-text, 0.3),
+  disabled-text: $light-disabled-text,
+  elevation: black,
+  hint-text: $light-disabled-text,
+  secondary-text: $light-accent-text,
+  accent-text: $light-accent-text,
+  icon: $light-text,
+  icons: $light-text,
+  text: $light-text,
+  slider-min: $light-text,
+  slider-off: rgba($light-text, 0.3),
+  slider-off-active: rgba($light-text, 0.3),
+);
+
+// Background config
+$dark-background: #373737;
+$dark-bg-lighter-5: lighten($dark-background, 5%);
+$dark-bg-lighter-10: lighten($dark-background, 10%);
+$dark-bg-lighter-20: lighten($dark-background, 20%);
+$dark-bg-lighter-30: lighten($dark-background, 30%);
+$light-bg-alpha-4: rgba(#fafafa, 0.04);
+$light-bg-alpha-12: rgba(#fafafa, 0.12);
+
+$mat-dark-theme-background: (
+  background: $dark-background,
+  status-bar: $dark-bg-lighter-20,
+  app-bar: $dark-bg-lighter-5,
+  hover: $light-bg-alpha-4,
+  card: $dark-bg-lighter-5,
+  dialog: $dark-bg-lighter-5,
+  tooltip: $dark-bg-lighter-20,
+  disabled-button: $light-bg-alpha-12,
+  raised-button: $dark-bg-lighter-5,
+  focused-button: $light-focused,
+  selected-button: $dark-bg-lighter-20,
+  selected-disabled-button: $dark-bg-lighter-30,
+  disabled-button-toggle: $dark-bg-lighter-10,
+  unselected-chip: $dark-bg-lighter-20,
+  disabled-list-option: $dark-bg-lighter-10,
+);
+
+$dark-primary: (
+  main: #1b1b1b,
+  lighter: #bbbbbb,
+  darker: #101010,
+  200: #1b1b1b,
+  // For slide toggle,
+  contrast:
+    (
+      main: $light-primary-text,
+      lighter: $dark-primary-text,
+      darker: $light-primary-text,
+    ),
+);
+$dark-theme-primary: mat.define-palette($dark-primary, main, lighter, darker);
+
+$dark-accent: (
+  main: #00ddff,
+  lighter: #b3f5ff,
+  darker: #00cfff,
+  200: #00ddff,
+  // For slide toggle,
+  contrast:
+    (
+      main: $dark-primary-text,
+      lighter: $dark-primary-text,
+      darker: $dark-primary-text,
+    ),
+);
+$dark-theme-accent: mat.define-palette($dark-accent, main, lighter, darker);
+
+$mat-warn: (
+  main: #ff4d4d,
+  lighter: #ffcaca,
+  darker: #ff3434,
+  200: #ff4d4d,
+  // For slide toggle,
+  contrast:
+    (
+      main: $dark-primary-text,
+      lighter: $dark-primary-text,
+      darker: $light-primary-text,
+    ),
+);
+$dark-theme-warn: mat.define-palette($mat-warn, main, lighter, darker);
+
+$dark-theme: (
+  primary: $dark-theme-primary,
+  accent: $dark-theme-accent,
+  warn: $dark-theme-warn,
+  is-dark: true,
+  foreground: $mat-dark-theme-foreground,
+  background: $mat-dark-theme-background,
+);
+
+body {
+  --primary-color: #1b1b1b;
+  --primary-lighter-color: #bbbbbb;
+  --primary-darker-color: #101010;
+  --text-primary-color: #{$light-primary-text};
+  --text-primary-lighter-color: #{$dark-primary-text};
+  --text-primary-darker-color: #{$light-primary-text};
+
+  --accent-color: #00ddff;
+  --accent-lighter-color: #b3f5ff;
+  --accent-darker-color: #00cfff;
+  --text-accent-color: #{$dark-primary-text};
+  --text-accent-lighter-color: #{$dark-primary-text};
+  --text-accent-darker-color: #{$dark-primary-text};
+
+  --warn-color: #ff4d4d;
+  --warn-lighter-color: #ffcaca;
+  --warn-darker-color: #ff3434;
+  --text-warn-color: #{$dark-primary-text};
+  --text-warn-lighter-color: #{$dark-primary-text};
+  --text-warn-darker-color: #{$light-primary-text};
+}

@@ -1,0 +1,7 @@
+// This is necessary for adding the custom colors to the theme map.
+// For more info: https://getbootstrap.com/docs/5.1/customize/sass/#modify-map
+$custom-colors: (
+  "primary-light": $primary-light,
+  "primary-dark": $primary-dark
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);

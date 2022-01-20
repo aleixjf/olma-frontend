@@ -1,0 +1,209 @@
+/*
+@use "sass:map";
+@use "@angular/material" as mat;
+*/
+
+:host {
+  //INFO: This + css in library component is what allows us to have a table which uses 100% of available space
+  flex: 1 1 auto;
+
+  .skeleton-container {
+    height: 100%;
+
+    .skeleton-content {
+      height: 100%;
+    }
+  }
+}
+
+.playlist-info {
+  margin-top: 15px;
+
+  p {
+    text-align: center;
+  }
+}
+
+/* Generic table settings */
+.table-container {
+  width: 100%;
+  height: 100%;
+  //min-height: 30vh;
+  //max-height: 80vh; //Define height so that there appears a sticky header, otherwise comment
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto; //This is what allows the table to have an unlimitted width, but the body to remain 100vw online;
+
+  table {
+    width: 100%;
+    border-collapse: separate; //INFO: Allows the sticky rows to have the same borders than its columns/rows
+
+    th {
+      font-weight: 1000;
+    }
+  }
+}
+
+.mat-header-row,
+.mat-row {
+  overflow-y: hidden;
+
+  .mat-header-cell,
+  .mat-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:first-child {
+      padding-left: 16px; //INFO: Like the mat-toolbar
+    }
+  }
+
+  //INFO: Last column
+  .mat-column-actions {
+    &.mat-header-cell,
+    &.mat-cell {
+      padding-left: 16px;
+      padding-right: 16px; //INFO: Like the mat-toolbar
+    }
+  }
+}
+
+/* Zebra filling */
+//INFO: Temporarily, we add the same color (but different to the header row) to cells until zebra styling is fixed.
+.odd,
+.even {
+  background-color: #373737;
+}
+/*
+INFO: Disabled for now because of the odd/even behavior not working properly on Virtual Table.
+.odd {
+  background-color: darken(#444444, 10%);
+}
+.even {
+  background-color: inherit;
+}
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-palette: map.get($color-config, 'primary');
+  $accent-palette: map.get($color-config, 'accent');
+
+  .odd {
+    background-color: mat.get-color-from-palette($primary-palette, 400);
+  }
+  .even {
+    background-color: mat.get-color-from-palette($primary-palette, 500);
+  }
+}
+*/
+
+/* Columns Width + Paddings (Margins don't work on Tables */
+.mat-column-title,
+.mat-column-artists,
+.mat-column-album {
+  min-width: 150px;
+  max-width: 300px;
+}
+.mat-column-name,
+.mat-column-mix,
+.mat-column-version,
+.mat-column-remixers,
+.mat-column-label,
+.mat-column-comments {
+  min-width: 100px;
+  max-width: 250px;
+}
+
+.mat-column-duration,
+.mat-column-key,
+.mat-column-year,
+.mat-column-playcount,
+.mat-column-language {
+  min-width: 50px;
+  max-width: 100px;
+}
+
+.mat-column-bpm {
+  min-width: 70px;
+  max-width: 120px;
+}
+
+/*
+.mat-column-rating {
+  min-width: 200px;
+  max-width: 250px;
+}
+*/
+
+.mat-column-rating,
+.mat-column-genre,
+.mat-column-time_signature,
+.mat-column-release_date,
+.mat-column-modification_date,
+.mat-column-last_played,
+.mat-column-import_date {
+  min-width: 100px;
+  max-width: 150px;
+}
+
+.mat-column-energy,
+.mat-column-popularity,
+.mat-column-danceability,
+.mat-column-acousticness,
+.mat-column-instrumentalness,
+.mat-column-liveness,
+.mat-column-speechiness {
+  min-width: 70px;
+  max-width: 120px;
+}
+
+.mat-column-actions {
+  width: 110px;
+  text-align: center;
+}
+
+/* Table borders */
+.mat-table-sticky-border-elem-right {
+  border-left: 1px solid #e0e0e0;
+}
+.mat-table-sticky-border-elem-left {
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Columns Text Alignment */
+::ng-deep {
+  .mat-column-duration,
+  .mat-column-key,
+  .mat-column-year,
+  .mat-column-playcount,
+  .mat-column-language,
+  .mat-column-bpm,
+  .mat-column-rating,
+  .mat-column-genre,
+  .mat-column-release_date,
+  .mat-column-modification_date,
+  .mat-column-last_played,
+  .mat-column-import_date,
+  .mat-column-energy,
+  .mat-column-popularity,
+  .mat-column-danceability,
+  .mat-column-acousticness,
+  .mat-column-instrumentalness,
+  .mat-column-liveness,
+  .mat-column-speechiness,
+  .mat-column-time_signature,
+  .mat-column-urls,
+  .mat-column-actions {
+    text-align: center;
+    .mat-sort-header-container {
+      justify-content: center;
+    }
+  }
+}
+
+.api-service:not(.api-connected) {
+  opacity: 30%;
+}

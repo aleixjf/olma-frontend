@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.button-description {
+  margin-left: 5px;
+  text-overflow: ellipsis;
+}

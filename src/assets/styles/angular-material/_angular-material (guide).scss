@@ -1,0 +1,69 @@
+// Custom Theming for Angular Material
+@use "@angular/material" as mat;
+// Add below @use for other components.scss in your app that have mixins.
+// @use "path/to/component.component" as component;
+@use "src/app/Library/components/playlist/table/playlist.component" as playlist;
+
+@include mat.core();
+// mat.core() includes the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// INFO: mat.define-palette(mat.palette, "default","lighter","darker","text") (the extra options are optionals)
+
+// Dark theme
+@import "dark-palette"; //INFO: This file contains our custom palettes, in case we don't want to use Angular Material ones(mat.$palette-name).
+$dark-primary: mat.define-palette($primary-dark-palette, 800, 900, 500);
+$dark-accent: mat.define-palette($accent-dark-palette);
+$dark-warn: mat.define-palette(
+  mat.$red-palette
+); // The warn palette is optional (defaults to red).
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
+
+// Light theme
+@import "light-palette"; //INFO: This file contains our custom palettes, in case we don't want to use Angular Material ones(mat.$palette-name).
+$light-primary: mat.define-palette($primary-light-palette);
+$light-accent: mat.define-palette($accent-light-palette);
+$light-warn: mat.define-palette(
+  mat.$red-palette
+); // The warn palette is optional (defaults to red).
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+//@include mat.core-theme($olma-theme);
+
+// Alternatively, you can import and @include the theme mixins for each component
+//@include mat.all-component-themes($olma-theme);
+
+// Apply the dark theme by default
+// INFO: The choice of a light versus a dark theme determines the background and foreground colors used throughout the components.
+@include mat.all-component-themes($dark-theme);
+@include playlist.theme($dark-theme);
+
+// Apply the light theme only when the `.light-theme` CSS class is applied to an ancestor element of the components (such as `body`).
+.light-theme {
+  @import "dark-theme-overrides";
+  @import "light-theme-overrides";
+
+  @include mat.all-component-themes($light-theme);
+  @include playlist.theme($light-theme);
+}

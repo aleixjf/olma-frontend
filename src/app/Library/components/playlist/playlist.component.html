@@ -1,0 +1,558 @@
+<div class="skeleton-container">
+  <div class="skeleton-overlay" *ngIf="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+  <div class="skeleton-content">
+    <cdk-virtual-scroll-viewport
+      class="table-container"
+      tvsItemSize="48"
+      [headerEnabled]="true"
+      headerHeight="56"
+      [bufferMultiplier]="10"
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event)"
+        matSort
+        (matSortChange)="sortData($event)"
+      >
+        <!--
+          <ng-container *ngFor="let column of visibleColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          </ng-container>      
+          -->
+
+        <ng-container matColumnDef="uuid">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            UUID
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.uuid }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Title
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Name
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mix">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>Mix</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mix }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="version">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Version
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.version }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="artist">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Artist(s)
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.artist }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remixer">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Remixer(s)
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.remixer }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="album">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Album
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.album }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Time
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedTime(element.duration) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="bpm">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            BPM
+            <!-- <mat-icon mat-icon-button color="primary">monitor_heart</mat-icon> -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.bpm ? element.bpm.toFixed(2) : 0.0 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="key">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Key
+            <!-- <mat-icon mat-icon-button color="primary">music_note</mat-icon> -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedKey(element.key_id, element.key) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="genre">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Genre
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.genre }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="release_date">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Release Date
+            <!-- <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedDate(element.release_date) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="release_year">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Year
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedDate(element.release_date, 'yyyy') }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="label">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Label
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.label }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            <!--
+              <button mat-icon-button (click)="addTrackt()">
+                <mat-icon mat-icon-button color="primary">add</mat-icon>
+              </button>
+              -->
+            Rating
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <ngb-rating
+              [(rate)]="element.rating"
+              (rateChange)="updateRating(element, $event)"
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+            <!--
+              <button mat-icon-button (click)="updateRating(element, 1)">
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="element.rating && element.rating >= 1"
+                  color="primary"
+                  >star</mat-icon
+                >
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="!element.rating || element.rating < 1"
+                  color="primary"
+                  >star_border</mat-icon
+                >
+              </button>
+              <button mat-icon-button (click)="updateRating(element, 2)">
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="element.rating && element.rating >= 2"
+                  color="primary"
+                  >star</mat-icon
+                >
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="!element.rating || element.rating < 2"
+                  color="primary"
+                  >star_border</mat-icon
+                >
+              </button>
+              <button mat-icon-button (click)="updateRating(element, 2)">
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="element.rating && element.rating >= 3"
+                  color="primary"
+                  >star</mat-icon
+                >
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="!element.rating || element.rating < 3"
+                  color="primary"
+                  >star_border</mat-icon
+                >
+              </button>
+              <button mat-icon-button (click)="updateRating(element, 4)">
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="element.rating && element.rating >= 4"
+                  color="primary"
+                  >star</mat-icon
+                >
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="!element.rating || element.rating < 4"
+                  color="primary"
+                  >star_border</mat-icon
+                >
+              </button>
+              <button mat-icon-button (click)="updateRating(element, 5)">
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="element.rating && element.rating >= 5"
+                  color="primary"
+                  >star</mat-icon
+                >
+                <mat-icon
+                  mat-icon-button
+                  *ngIf="!element.rating || element.rating < 5"
+                  color="primary"
+                  >star_border</mat-icon
+                >
+              </button>
+              -->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="energy">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Energy
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.energy ? 'Energy ' + element.energy : '' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comments">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Comments
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.comments }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comments2">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Comments 2
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.comments2 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="language">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Language
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.language }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="import_date">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Import Date
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedDate(element.import_date) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="last_played">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Last Played
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedDate(element.last_played) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="playcount">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Play Count
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.playcount ? element.playcount : 0 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modification_date">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Modification Date
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ formattedDate(element.modification_date) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="popularity">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Popularity
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.popularity }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="danceability">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Danceability
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.danceability }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valence">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Happinness
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.valence }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acousticness">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Acousticness
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.acousticness }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="instrumentalness">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Instrumentalness
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.instrumentalness }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="liveness">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Liveness
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.liveness }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="speechiness">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Speechiness
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.speechiness }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="time_signature">
+          <th mat-header-cell mat-sort-header cdkDrag *matHeaderCellDef>
+            Time Signature
+            <!--
+              <mat-icon mat-icon-button color="primary"
+                >calendar_today</mat-icon>
+              -->
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.time_signature }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="num_likes">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon mat-icon-button color="primary">thumb_up</mat-icon>
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.num_likes }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="num_dislikes">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon mat-icon-button color="primary">thumb_down</mat-icon>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.num_dislikes }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="urls">
+          <th mat-header-cell cdkDrag *matHeaderCellDef>External Links</th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Spotify -->
+            <button mat-icon-button>
+              <a
+                *ngIf="element.urls?.spotify"
+                [href]="element.urls.spotify"
+                target="_blank"
+                ><i class="fab fa-spotify fa-lg api-service api-connected"></i
+              ></a>
+              <i
+                *ngIf="!element.urls?.spotify"
+                class="fab fa-spotify fa-lg api-service"
+              ></i>
+            </button>
+            <!-- Dropbox -->
+            <button mat-icon-button>
+              <a
+                *ngIf="element.urls?.dropbox"
+                [href]="element.urls.dropbox"
+                target="_blank"
+                ><i class="fab fa-dropbox fa-lg api-service api-connected"></i
+              ></a>
+              <i
+                *ngIf="!element.urls?.dropbox"
+                class="fab fa-dropbox fa-lg api-service"
+              ></i>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="desktop-only">
+              <button mat-icon-button (click)="editTrack(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteTrack(element)">
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+            </div>
+            <div class="mobile-only">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="trackMenu"
+                [matMenuTriggerData]="{ track: element }"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <!-- INFO: We will set odd when it's really even because the header row is also counted! -->
+        <tr
+          mat-row
+          *matRowDef="let row; let even = even; columns: displayedColumns"
+          [ngClass]="{ odd: even, even: !even }"
+        ></tr>
+        <!--
+          <tr
+            mat-header-row
+            *matHeaderRowDef="visibleColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
+          -->
+      </table>
+    </cdk-virtual-scroll-viewport>
+    <div class="playlist-info">
+      <p *ngIf="!dataSource">Collection not loaded.</p>
+      <p *ngIf="dataSource && dataSource.filteredData.length == 0">
+        No results.
+      </p>
+    </div>
+  </div>
+</div>
+
+<mat-menu #trackMenu="matMenu" xPosition="before">
+  <ng-template matMenuContent let-track="track">
+    <button mat-menu-item (click)="editTrack(track)">
+      <mat-icon mat-icon-button>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="deleteTrack(track)">
+      <mat-icon mat-icon-button color="warn">delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

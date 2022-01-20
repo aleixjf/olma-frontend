@@ -1,0 +1,57 @@
+:host {
+  overflow-x: scroll;
+  overflow-y: visible;
+
+  .mat-tree-node {
+    padding-right: 25px;
+    overflow: hidden;
+
+    .button-description {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.node-entry {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  /*
+  &:hover {
+    background-color: aqua;
+  }
+  */
+}
+.node-icon {
+  margin-right: 10px;
+}
+.node-link {
+  text-decoration: none;
+}
+
+.playlists-tree-collapsed {
+  display: none;
+}
+
+.playlists-tree ul,
+.playlists-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+/*
+* This padding sets alignment of the nested nodes & leaf nodes.
+* Leaf nodes need to have padding so as to align with other non-leaf nodes
+* under the same parent.
+*/
+.playlists-tree .mat-nested-tree-node div[role='group'] {
+  padding-left: 30px; //INFO: This is the padding for all children entries (how much will the padding be for subitems)
+}
+.playlists-tree div[role='group'] > .mat-tree-node {
+  padding-left: 40px; //WARNING: This should be the icon's defined width, so that the non-expandable entries are aligned with the expandable ones.
+}

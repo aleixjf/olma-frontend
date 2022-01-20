@@ -1,0 +1,24 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+// Add below @use for other components.scss in your app that have mixins.
+// @use "path/to/component.component" as component;
+
+@include mat.core();
+// mat.core() includes the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+//INFO: We'll add the overrides in ITCSS
+//@import "angular-material-font-overrides";
+//@import 'angular-material-overrides';
+
+// Apply the dark theme by default
+// INFO: The choice of a light versus a dark theme determines the background and foreground colors used throughout the components.
+@import 'dark-theme';
+@include mat.all-component-themes($dark-theme);
+
+// Apply the light theme only when the `.light-theme` CSS class is applied to an ancestor element of the components (such as `body`).
+.light-theme {
+  @import 'light-theme';
+  @include mat.all-component-themes($light-theme);
+}

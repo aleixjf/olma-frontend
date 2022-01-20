@@ -1,0 +1,47 @@
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 10px;
+}
+
+// Handle buttons appropriately, with respect to line-height
+.mat-raised-button,
+.mat-stroked-button,
+.mat-flat-button {
+  padding: 0 1.15em;
+  margin: 0 0.65em;
+  min-width: 3em;
+  line-height: 36.4px;
+}
+
+.mat-standard-chip {
+  padding: 0.5em 0.85em;
+  min-height: 2.5em;
+}
+
+.material-icons {
+  font-size: 24px;
+  font-family: 'Material Icons', 'Material Icons';
+  .mat-badge-content {
+    font-family: 'Roboto';
+  }
+}
+
+.mat-button-base:not(.mat-icon-button) {
+  .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .button-description {
+      margin-left: 5px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+    }
+  }
+}
+
+.mat-form-field-infix {
+  width: auto !important;
+}

@@ -1,0 +1,15 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+
+  @media screen and (min-width: $phoneWidth) {
+    align-items: center;
+  }
+}
+
+.form-button {
+  margin-top: 15px;
+}

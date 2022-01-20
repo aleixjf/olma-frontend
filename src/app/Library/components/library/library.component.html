@@ -1,0 +1,233 @@
+<mat-sidenav-container
+  [autosize]="!mobileQuery.matches"
+  class="example-container"
+>
+  <mat-sidenav
+    class="custom-drawer"
+    [class.mobile-drawer]="mobileQuery.matches"
+    [ngStyle]="!mobileQuery.matches ? resizeStyle : resizeMobile"
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+    mwlResizable
+    [enableGhostResize]="!mobileQuery.matches"
+    (resizing)="onResize($event)"
+    [disableClose]="!mobileQuery.matches"
+    #browserTree
+  >
+    <!--
+    fixedInViewport="true"
+    [fixedTopGap]="64" //Header height -> so that it is only in the body!
+    [fixedTopGap]="64" //Footer height
+  -->
+    <div
+      class="resize-handle-right"
+      mwlResizeHandle
+      [resizeEdges]="{ right: true }"
+    ></div>
+    <app-side-panel-search-box></app-side-panel-search-box>
+    <app-side-panel-add-button></app-side-panel-add-button>
+    <app-side-panel-tree></app-side-panel-tree>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="library-header">
+      <div class="node-settings">
+        <button mat-icon-button (click)="browserTree.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h2 class="node-name">
+          {{ node }}
+        </h2>
+        <a
+          *ngIf="smartlist"
+          type="button"
+          mat-icon-button
+          matTooltip="Edit smart rules"
+          matTooltipPosition="below"
+          routerLink="edit"
+        >
+          <mat-icon>settings</mat-icon>
+        </a>
+      </div>
+      <div class="desktop-only">
+        <div class="button-row">
+          <mat-form-field color="accent" appearance="standard">
+            <mat-label>Search in playlist</mat-label>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              placeholder="Search track"
+              #input
+            />
+          </mat-form-field>
+
+          <div>
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="Match tracks with Spotify"
+              matTooltipPosition="below"
+              (click)="match()"
+              [disabled]="!showSyncButton || !showExportButtons"
+            >
+              <mat-icon>sync</mat-icon
+              ><span class="button-description"
+                >Match library tracks with Spotify</span
+              >
+            </button>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="Upload your collection directly from your drive"
+              matTooltipPosition="below"
+              (click)="fileInput.click()"
+            >
+              <mat-icon>file_upload</mat-icon
+              ><span class="button-description">Upload local collection</span>
+            </button>
+            <input
+              hidden
+              (change)="selectLibrary($event)"
+              #fileInput
+              type="file"
+              accept=".xml,.nml"
+              id="file"
+            />
+          </div>
+
+          <div
+            matTooltip="Download your modified collection to your drive"
+            matTooltipPosition="below"
+          >
+            <button
+              type="button"
+              mat-icon-button
+              (click)="exportTraktorLibrary()"
+              [disabled]="!showExportButtons"
+            >
+              <mat-icon>file_download</mat-icon>
+              <span class="button-description">Download collection</span>
+            </button>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="Get collection from a Cloud Service"
+              matTooltipPosition="below"
+              [disabled]="!showCloudButtons"
+            >
+              <mat-icon>cloud_download</mat-icon
+              ><span class="button-description">Get from Cloud Service</span>
+            </button>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="Save collection on a Cloud Service"
+              matTooltipPosition="below"
+              [disabled]="!showCloudButtons || !showExportButtons"
+            >
+              <mat-icon>cloud_upload</mat-icon>
+              <span class="button-description">Save on Cloud Service</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-only">
+        <!--
+        <mat-form-field color="accent" appearance="standard">
+          <mat-label>Search in playlist</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Search track"
+            #input
+          />
+        </mat-form-field>
+        -->
+        <button mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="libraryMenu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </div>
+    </div>
+    <app-playlist></app-playlist>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #libraryMenu="matMenu" xPosition="before">
+  <ng-template matMenuContent>
+    <button
+      type="button"
+      mat-menu-item
+      matTooltip="Match tracks with Spotify"
+      matTooltipPosition="below"
+      (click)="match()"
+      [disabled]="!showSyncButton || !showExportButtons"
+    >
+      <mat-icon>sync</mat-icon
+      ><span class="button-description">Match with Spotify</span>
+    </button>
+
+    <button
+      type="button"
+      mat-menu-item
+      matTooltip="Upload your collection directly from your drive"
+      matTooltipPosition="below"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>file_upload</mat-icon
+      ><span class="button-description">Upload local collection</span>
+    </button>
+
+    <button
+      type="button"
+      mat-menu-item
+      (click)="exportTraktorLibrary()"
+      [disabled]="!showExportButtons"
+    >
+      <mat-icon>file_download</mat-icon>
+      <span class="button-description">Download collection</span>
+    </button>
+
+    <button
+      type="button"
+      mat-menu-item
+      matTooltip="Get collection from a Cloud Service"
+      matTooltipPosition="below"
+      [disabled]="!showCloudButtons"
+    >
+      <mat-icon>cloud_download</mat-icon
+      ><span class="button-description">Get from Cloud Service</span>
+    </button>
+
+    <button
+      type="button"
+      mat-menu-item
+      matTooltip="Save collection on a Cloud Service"
+      matTooltipPosition="below"
+      [disabled]="!showCloudButtons || !showExportButtons"
+    >
+      <mat-icon>cloud_upload</mat-icon>
+      <span class="button-description">Save on Cloud Service</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<input
+  hidden
+  (change)="selectLibrary($event)"
+  #fileInput
+  type="file"
+  accept=".xml,.nml"
+  id="file"
+/>

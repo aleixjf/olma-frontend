@@ -1,0 +1,100 @@
+/* This will only apply to the dividers inside the 'app-root' component, but not their childs */
+/* To modify the parent container CSS, we can use :host or, otherwise, we should either modify it in the CSS of the component that holds it */
+
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  // refers to 'app-root'
+  display: flex;
+  flex-direction: column;
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  /*
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  color: $text-color;
+  background: $body-background;
+  */
+}
+
+.menu-drawer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  mat-sidenav-content {
+    //INFO: Necessary to send the footer to the bottom automatically, since we have introduced it inside the drawer
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-sidenav {
+    @media screen and (min-width: $phoneWidth) {
+      display: none;
+    }
+    //INFO: Necessary to send the footer to the bottom automatically, since we have introduced it inside the drawer
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidenav-container {
+    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+    flex: 1;
+    display: hidden;
+  }
+
+  .sidenav-container .mobile-drawer {
+    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+       `<body>` to be our scrolling element for mobile layouts. */
+    flex: 1 0 auto;
+  }
+}
+
+.header-toolbar .mobile-drawer {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  /* Kinda like sticky  behavior? */
+  z-index: 2;
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+/*
+mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+}
+*/
+
+.logo-container {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: inherit;
+  }
+  &.active,
+  &:active {
+    font-weight: inherit;
+    color: inherit; //INFO: We could set a different color when hovering the logo text
+  }
+
+  .brand-logo {
+    width: 30px;
+  }
+
+  .brand-name {
+    margin-left: 10px;
+    &:hover {
+      color: inherit; //INFO: We could set a different color when hovering the logo text
+    }
+  }
+}

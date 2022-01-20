@@ -1,0 +1,54 @@
+/*
+7. UTILITIES:
+
+The only place where !important declarations will be accepted.
+The most explicit types of rules.
+
+This layer beats all previous layers,
+and has the power to override anything at all that
+has gone before it.
+
+It is inelegant and heavy-handed,
+and contains utility and helper classes, hacks and overrides.
+
+A lot of the declarations in this layer will carry
+!important (e.g. .text-center { text-align: centre !important; }).
+This is the highest specificity layer –
+it includes the most explicit types of rule,
+with the most narrow focus.
+This layer forms the point of the Triangle.
+*/
+
+/* stylelint-disable declaration-no-important */
+
+.mobile-only {
+  @media screen and (min-width: $phoneWidth) {
+    display: none;
+  }
+}
+
+.tablet-only {
+  @media screen and (min-width: $phoneWidth) and (max-width: $tabletWidth) {
+    display: none;
+  }
+}
+
+.desktop-only {
+  @media screen and (max-width: $tabletWidth) {
+    display: none;
+  }
+}
+
+.tablet-friendly {
+  @media screen and (min-width: $tabletWidth) {
+    display: none;
+  }
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.no-transition {
+  transition: none;
+}

@@ -1,0 +1,83 @@
+/*
+4. ELEMENTS:
+
+Customize and redefine the base HTML elements properties:
+-header styles (H1-H6...)
+-paragraph styles (p, a, li, etc.)
+
+These are bare, unclassed HTML elements.
+What does an h1 look like without a class on it?
+What does an a look like without a class on it?
+The Elements layer binds onto bare HTML element (or 'type')
+selectors only. It is slightly more explicit than the previous
+layer in that we are now saying 'make every h1 this big', or
+'make every a be a certain colour'. It is still a very low-specificity
+layer, but affects slightly less of the DOM, and is slightly
+more opinionated, hence its location in the Triangle.
+
+The Elements layer is typically the last one in which we'd
+find bare, element-based selectors, and is very rarely
+added to or changed after initial setup. Once we have defined
+element-level styles, all additions and deviations should be
+implemented using classes.
+*/
+
+h1 {
+  font-family: $title-font-family;
+  font-size: 4em;
+  font-weight: bold;
+  text-align: center;
+}
+
+h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: $title-font-family;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: $title-font-family;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+p,
+li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  color: $text-color;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+a {
+  color: $links-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $links-hover-color;
+    text-decoration: none;
+  }
+
+  &:active,
+  &.active {
+    color: $links-active-color;
+    font-weight: 600;
+  }
+
+  /*
+  &:visited {
+    color: mediumvioletred;
+  }
+  */
+}

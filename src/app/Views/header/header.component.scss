@@ -1,0 +1,33 @@
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+/*
+mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+}
+*/
+
+.logo-container {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: inherit;
+  }
+
+  .brand-logo {
+    width: 30px;
+  }
+
+  .brand-name {
+    margin-left: 10px;
+    &:hover {
+      color: inherit; //INFO: We could set a different color when hovering the logo text
+    }
+    &:active {
+      color: inherit; //INFO: We could set a different color when hovering the logo text
+    }
+  }
+}

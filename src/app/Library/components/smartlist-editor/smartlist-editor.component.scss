@@ -1,0 +1,118 @@
+@import 'src/assets/styles/itcss/1-settings';
+
+:host {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: $phoneWidth) and (max-width: $smallScreenWidth) {
+    width: 100%;
+  }
+}
+
+.grid {
+  //display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr min-content;
+  grid-template-rows: auto;
+}
+
+.grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.grid-row {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  justify-content: stretch;
+  align-items: center;
+  column-gap: 10px;
+
+  @media (min-width: $tabletWidth) {
+    //grid-column: 0 / 3;
+    grid-template-columns: 1fr 1fr 1fr min-content;
+  }
+
+  & > * {
+    width: 100%;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button {
+  /*
+  margin-top: 15px;
+  margin-left: 15px;
+  */
+  display: none;
+  @media (min-width: $phoneWidth) {
+    display: inherit;
+    margin-right: 15px;
+  }
+
+  .button-description {
+    display: none;
+    @media (min-width: $phoneWidth) {
+      display: inherit;
+    }
+  }
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  @media (min-width: $phoneWidth) {
+    justify-content: start;
+  }
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+
+  .mat-button-base {
+    margin-top: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
+
+.rule-header {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: larger;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 0.5rem;
+
+  @media (min-width: $tabletWidth) {
+    display: none;
+  }
+}
+
+.action-buttons {
+  @media (max-width: $tabletWidth) {
+    display: none;
+  }
+}
+
+mat-form-field {
+  width: auto;
+}
